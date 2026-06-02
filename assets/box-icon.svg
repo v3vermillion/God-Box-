@@ -1,0 +1,98 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Deep background -->
+    <radialGradient id="bg" cx="50%" cy="42%" r="75%">
+      <stop offset="0%" stop-color="#2a1d0c"/>
+      <stop offset="45%" stop-color="#140d05"/>
+      <stop offset="100%" stop-color="#070402"/>
+    </radialGradient>
+
+    <!-- Ambient golden glow behind the box -->
+    <radialGradient id="halo" cx="50%" cy="46%" r="50%">
+      <stop offset="0%" stop-color="#ffe9a8" stop-opacity="0.95"/>
+      <stop offset="28%" stop-color="#f4c869" stop-opacity="0.65"/>
+      <stop offset="60%" stop-color="#c9a557" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#c9a557" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Box front face -->
+    <linearGradient id="front" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f2d488"/>
+      <stop offset="22%" stop-color="#dcb45f"/>
+      <stop offset="62%" stop-color="#b58e40"/>
+      <stop offset="100%" stop-color="#6e5527"/>
+    </linearGradient>
+
+    <!-- Box lid (top) -->
+    <linearGradient id="lid" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="#fff0c4"/>
+      <stop offset="45%" stop-color="#e6c477"/>
+      <stop offset="100%" stop-color="#b0883f"/>
+    </linearGradient>
+
+    <!-- Side face (right) -->
+    <linearGradient id="side" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8a6c33"/>
+      <stop offset="100%" stop-color="#574016"/>
+    </linearGradient>
+
+    <!-- Cross gradient -->
+    <linearGradient id="cross" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fffefa"/>
+      <stop offset="50%" stop-color="#fff2cf"/>
+      <stop offset="100%" stop-color="#ffe09a"/>
+    </linearGradient>
+
+    <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="9" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="bigBlur" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
+
+    <filter id="edge" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="20" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- Halo -->
+  <circle cx="256" cy="236" r="190" fill="url(#halo)"/>
+
+  <!-- Soft glow under cross -->
+  <g filter="url(#bigBlur)" opacity="0.85">
+    <path d="M256 150 v150 M196 205 h120" stroke="#ffe9a8" stroke-width="34" stroke-linecap="round"/>
+  </g>
+
+  <!-- The Box -->
+  <g filter="url(#edge)">
+    <!-- side face -->
+    <path d="M344 214 L388 188 L388 356 L344 392 Z" fill="url(#side)"/>
+    <!-- front face -->
+    <rect x="150" y="214" width="194" height="178" rx="8" fill="url(#front)"/>
+    <!-- inner frame line -->
+    <rect x="166" y="230" width="162" height="146" rx="5" fill="none" stroke="#6e5527" stroke-opacity="0.55" stroke-width="2.5"/>
+    <!-- lid top -->
+    <path d="M150 214 L194 178 L432 178 L388 214 Z" fill="url(#lid)"/>
+    <!-- lid front band -->
+    <rect x="146" y="206" width="202" height="30" rx="6" fill="url(#lid)"/>
+    <rect x="146" y="206" width="202" height="30" rx="6" fill="#000" opacity="0.04"/>
+    <!-- slot -->
+    <rect x="206" y="217" width="82" height="6" rx="3" fill="#1a1206" opacity="0.85"/>
+  </g>
+
+  <!-- Glowing cross on the front face -->
+  <g filter="url(#softGlow)">
+    <path d="M247 250 h18 v44 h36 v18 h-36 v44 h-18 v-44 h-36 v-18 h36 Z" fill="url(#cross)"/>
+  </g>
+
+  <!-- subtle top sheen -->
+  <path d="M150 214 L194 178 L432 178 L388 214 Z" fill="#ffffff" opacity="0.10"/>
+</svg>
