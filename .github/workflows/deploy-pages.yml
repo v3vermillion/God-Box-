@@ -1,0 +1,55 @@
+name: Deploy God Box to GitHub Pages
+
+# Publishes the static PWA to GitHub Pages on every push to main.
+# This uses the official "GitHub Actions" Pages pipeline, which is more
+# reliable than branch-serving and works even if the site lives at the
+# repo root alongside dev tooling.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+# Allow this workflow to deploy to Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; let an in-progress run finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Assemble static site
+        run: |
+          mkdir -p _site
+          # Only ship the app — leave dev tooling (tools/, README) behind.
+          cp index.html styles.css app.js service-worker.js manifest.webmanifest _site/
+          cp -r icons assets _site/
+          # Disable Jekyll so files like service-worker.js are served as-is.
+          touch _site/.nojekyll
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
