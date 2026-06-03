@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+  <title>The God Box</title>
+  <meta name="description" content="A quiet place to give every worry to God — and stay honest about what you're still holding." />
+
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <meta name="theme-color" content="#0a0604" />
+
+  <!-- iOS / Apple home-screen -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="God Box" />
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- Save / status indicator -->
+  <div id="save-indicator" class="save-indicator" hidden></div>
+
+  <!-- In-app reminder banner (for when OS notifications aren't available) -->
+  <div id="reminder-banner" class="reminder-banner" hidden>
+    <span id="reminder-banner-text"></span>
+    <button id="reminder-banner-dismiss" aria-label="Dismiss reminder">✕</button>
+  </div>
+
+  <main id="app" class="content" aria-live="polite"></main>
+
+  <!-- iOS "Add to Home Screen" hint -->
+  <div id="install-hint" class="install-hint" hidden>
+    <div class="install-hint-inner">
+      <button id="install-hint-close" class="install-hint-close" aria-label="Close">✕</button>
+      <div class="install-hint-title">Keep it close</div>
+      <p>Add The God Box to your Home Screen for full-screen use and notifications.</p>
+      <p class="install-hint-steps">Tap <strong>Share</strong> <span class="ios-share">􀈂</span> &nbsp;→&nbsp; <strong>Add to Home Screen</strong></p>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
