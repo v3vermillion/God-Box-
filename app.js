@@ -998,16 +998,24 @@
       var hm = s.dailyReminderTime.split(':');
       var due = new Date(now);
       due.setHours(parseInt(hm[0], 10) || 9, parseInt(hm[1], 10) || 0, 0, 0);
-      var notTooLate = (now - due) < 14 * 3600000; // don't fire a "morning" nudge near midnight
-      if (now >= due && notTooLate && rs.lastDailyKey !== tKey && !surrenderedToday()) {
-        var c = carrying().length;
-        var body = c > 0
-          ? 'You\'re still holding ' + c + (c === 1 ? ' worry' : ' worries') + '. Open the box and give ' + (c === 1 ? 'it' : 'them') + ' to God.'
-          : 'Bring today to God before you carry it yourself.';
-        fireReminder('A moment with God', body);
+      if (now >= due && rs.lastDailyKey !== tKey) {
+        // reminderTick() only runs while the app is open (boot + visibilitychange),
+        // so only nudge when the app is actually open *around* the scheduled time.
+        // Opening hours later must NOT retroactively pop the reminder, otherwise it
+        // looks like the notification fires every time you open the app. Timed
+        // delivery while the app is closed is handled by push, not this tick.
+        var withinWindow = (now - due) < 30 * 60000; // 30-minute catch-up window
+        if (withinWindow && !surrenderedToday()) {
+          var c = carrying().length;
+          var body = c > 0
+            ? 'You\'re still holding ' + c + (c === 1 ? ' worry' : ' worries') + '. Open the box and give ' + (c === 1 ? 'it' : 'them') + ' to God.'
+            : 'Bring today to God before you carry it yourself.';
+          fireReminder('A moment with God', body);
+          firedThisTick = true;
+        }
+        // Mark today handled either way so a later open in the same day stays silent.
         rs.lastDailyKey = tKey;
         saveReminderState(rs);
-        firedThisTick = true;
       }
     }
 
