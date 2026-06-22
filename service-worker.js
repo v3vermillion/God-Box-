@@ -1,7 +1,7 @@
 /* The God Box — service worker
  * Offline-first caching + Web Push handling.
  */
-var CACHE = 'godbox-v2';
+var CACHE = 'godbox-v3';
 var ASSETS = [
   './',
   './index.html',
